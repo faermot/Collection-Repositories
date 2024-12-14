@@ -1,0 +1,85 @@
+name: Sync Repository Visibility
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  sync_visibility:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+
+    - name: Install Dependencies
+      run: pip install requests markdown-it-py
+
+    - name: Sync Repository Visibility
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python - <<EOF
+        import requests
+        from markdown_it import MarkdownIt
+        from urllib.parse import urlparse
+
+        # GitHub Token автоматически передается в workflow
+        TOKEN = "${{ secrets.GITHUB_TOKEN }}"
+        HEADERS = {"Authorization": f"token {TOKEN}"}
+
+        # Имя пользователя и главного репозитория
+        USER = "${{ github.repository_owner }}"
+        MAIN_REPO = "${{ github.event.repository.name }}"
+
+        def extract_repo_links_from_readme(readme_content):
+            """Извлекает ссылки на репозитории из Markdown-файла"""
+            md = MarkdownIt()
+            tokens = md.parse(readme_content)
+            repo_links = []
+
+            for token in tokens:
+                if token.type == "link_open":
+                    href = dict(token.attrs).get("href", "")
+                    if USER in href:
+                        path = urlparse(href).path.strip("/")
+                        repo_links.append(path.split("/")[-1])
+            return repo_links
+
+        def get_repository_visibility(repo_name):
+            url = f"https://api.github.com/repos/{USER}/{repo_name}"
+            response = requests.get(url, headers=HEADERS)
+            return response.json().get("private", False)
+
+        def set_repository_visibility(repo_name, is_private):
+            url = f"https://api.github.com/repos/{USER}/{repo_name}"
+            data = {"private": is_private}
+            response = requests.patch(url, headers=HEADERS, json=data)
+            return response.status_code == 200
+
+        def sync_repositories():
+            # Считываем содержимое README.md
+            with open("README.md", "r", encoding="utf-8") as readme_file:
+                readme_content = readme_file.read()
+
+            # Извлекаем ссылки на репозитории
+            repo_names = extract_repo_links_from_readme(readme_content)
+
+            # Узнаем статус главного репозитория
+            main_repo_private = get_repository_visibility(MAIN_REPO)
+
+            # Обновляем видимость остальных репозиториев
+            for repo_name in repo_names:
+                if set_repository_visibility(repo_name, main_repo_private):
+                    print(f"Репозиторий {repo_name} обновлен")
+                else:
+                    print(f"Не удалось обновить репозиторий {repo_name}")
+
+        sync_repositories()
+        EOF
