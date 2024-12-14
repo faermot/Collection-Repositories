@@ -28,7 +28,7 @@
 20. [Классы и объекты](https://github.com/faermot/Classes-Objects)
 21. [Наследование классов](https://github.com/faermot/Class-Inheritance)
 22. [Структуры и перечисления](https://github.com/faermot/Struct-Enum)
-23. [Обобщённые типы](https://github.com/faermot/Generic)
+23. [Обобщенные типы](https://github.com/faermot/Generic)
 
 
 
