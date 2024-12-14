@@ -11,8 +11,8 @@
 3. [Comparing Integeres](https://github.com/faermot/Homework_DPK__Comparing_Numbers) #WPF
 4. [Римский калькулятор-конвертер ](https://github.com/faermot/Homework_DPK_26_09_2024) #WPF
 5. Практические по циклам:
-    a. [Без интерфейса](https://github.com/faermot/Homework_DPK_01_10_2024_console)
-    b. [С интерфейсом](https://github.com/faermot/Homework_DPK_01_10_2024_wpf) #WPF 
+    - [Без интерфейса](https://github.com/faermot/Homework_DPK_01_10_2024_console)
+    - [С интерфейсом](https://github.com/faermot/Homework_DPK_01_10_2024_wpf) #WPF 
 7. [Одномерные массивы](https://github.com/faermot/Homework_DPK_04_10_2024)
 8. [Одномерные массивы](https://github.com/faermot/Homework_DPK_08_10_2024) x2
 9. [Двумерные массивы](https://github.com/faermot/TwoDimArraysWPFApp) #WPF (С фреймами)
