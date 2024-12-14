@@ -10,69 +10,69 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
 
-      - name: Install Dependencies
-        run: pip install requests markdown-it-py
+    - name: Install Dependencies
+      run: pip install requests markdown-it-py
 
-      - name: Sync Repository Visibility
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub автоматически предоставляет токен
-        run: |
-          python - <<EOF
-          import re
-          import requests
+    - name: Sync Repository Visibility
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub автоматически предоставляет токен
+      run: |
+        python - <<EOF
+        import re
+        import requests
 
-          TOKEN = "${{ secrets.GITHUB_TOKEN }}"
-          USER = "${{ github.repository_owner }}"
-          MAIN_REPO = "${{ github.event.repository.name }}"
-          HEADERS = {"Authorization": f"token {TOKEN}"}
+        TOKEN = "${{ secrets.GITHUB_TOKEN }}"
+        USER = "${{ github.repository_owner }}"
+        MAIN_REPO = "${{ github.event.repository.name }}"
+        HEADERS = {"Authorization": f"token {TOKEN}"}
 
-          def extract_links_from_readme():
-              """Извлекает все ссылки на GitHub-репозитории из README.md"""
-              with open("README.md", "r", encoding="utf-8") as file:
-                  content = file.read()
-              
-              # Регулярное выражение для поиска ссылок на GitHub
-              repo_links = re.findall(r"https://github.com/[A-Za-z0-9_-]+/[A-Za-z0-9._-]+", content)
-              # Преобразуем ссылки в имена репозиториев
-              repo_names = [link.split("/")[-1] for link in repo_links if USER in link]
-              return repo_names
+        def extract_links_from_readme():
+            """Извлекает все ссылки на GitHub-репозитории из README.md"""
+            with open("README.md", "r", encoding="utf-8") as file:
+                content = file.read()
+            
+            # Регулярное выражение для поиска ссылок на GitHub
+            repo_links = re.findall(r"https://github.com/[A-Za-z0-9_-]+/[A-Za-z0-9._-]+", content)
+            # Преобразуем ссылки в имена репозиториев
+            repo_names = [link.split("/")[-1] for link in repo_links if USER in link]
+            return repo_names
 
-          def get_repository_visibility(repo_name):
-              """Получает текущую видимость репозитория"""
-              url = f"https://api.github.com/repos/{USER}/{repo_name}"
-              response = requests.get(url, headers=HEADERS)
-              return response.json().get("private", False)
+        def get_repository_visibility(repo_name):
+            """Получает текущую видимость репозитория"""
+            url = f"https://api.github.com/repos/{USER}/{repo_name}"
+            response = requests.get(url, headers=HEADERS)
+            return response.json().get("private", False)
 
-          def set_repository_visibility(repo_name, is_private):
-              """Устанавливает видимость репозитория"""
-              url = f"https://api.github.com/repos/{USER}/{repo_name}"
-              data = {"private": is_private}
-              response = requests.patch(url, headers=HEADERS, json=data)
-              return response.status_code == 200
+        def set_repository_visibility(repo_name, is_private):
+            """Устанавливает видимость репозитория"""
+            url = f"https://api.github.com/repos/{USER}/{repo_name}"
+            data = {"private": is_private}
+            response = requests.patch(url, headers=HEADERS, json=data)
+            return response.status_code == 200
 
-          def sync_repositories():
-              """Основная функция синхронизации"""
-              # Извлекаем ссылки на репозитории
-              repo_names = extract_links_from_readme()
+        def sync_repositories():
+            """Основная функция синхронизации"""
+            # Извлекаем ссылки на репозитории
+            repo_names = extract_links_from_readme()
 
-              # Получаем видимость главного репозитория
-              main_repo_visibility = get_repository_visibility(MAIN_REPO)
+            # Получаем видимость главного репозитория
+            main_repo_visibility = get_repository_visibility(MAIN_REPO)
 
-              # Синхронизируем видимость всех найденных репозиториев
-              for repo_name in repo_names:
-                  if set_repository_visibility(repo_name, main_repo_visibility):
-                      print(f"Репозиторий {repo_name} обновлен.")
-                  else:
-                      print(f"Не удалось обновить репозиторий {repo_name}.")
+            # Синхронизируем видимость всех найденных репозиториев
+            for repo_name in repo_names:
+                if set_repository_visibility(repo_name, main_repo_visibility):
+                    print(f"Репозиторий {repo_name} обновлен.")
+                else:
+                    print(f"Не удалось обновить репозиторий {repo_name}.")
 
-          # Запуск синхронизации
-          sync_repositories()
-          EOF
+        # Запуск синхронизации
+        sync_repositories()
+        EOF
