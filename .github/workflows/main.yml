@@ -23,7 +23,7 @@ jobs:
 
     - name: Sync Repository Visibility
       env:
-        GITHUB_TOKEN: "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"  # GitHub автоматически предоставляет токен
+        GITHUB_TOKEN: "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" 
       run: |
           python - <<EOF
           import re
@@ -55,9 +55,10 @@ jobs:
               """Устанавливает видимость репозитория"""
               url = f"https://api.github.com/repos/{USER}/{repo_name}"
               data = {"private": is_private}
-              response = requests.patch(url, headers=HEADERS, json=data)
+              response = requests.patch(url, headers=HEADERS, json=data)  # Используем json
               print(f"Обновление видимости {repo_name} -> {'private' if is_private else 'public'}: {response.status_code}, {response.json()}")
               return response.status_code == 200
+
 
           def sync_repositories():
               """Основная функция синхронизации"""
