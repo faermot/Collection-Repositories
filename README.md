@@ -4,7 +4,6 @@
 
 > Карасев Илья
 
----
 1. [BEBRA CORPORATION](https://github.com/faermot/Homework_DPK_06_09_2024) (Первая WPF программа) #WPF
 2. [CheckTypes](https://github.com/faermot/Homework_DPK_08_09_2024)
 3. [Comparing Integeres](https://github.com/faermot/Homework_DPK__Comparing_Numbers) #WPF
