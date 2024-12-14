@@ -1,9 +1,9 @@
 # Список репозиториев с ДЗ
 
-
 <img src="https://github.com/user-attachments/assets/f57852aa-b866-4a98-b1f2-5788c74bcd49" width="135" />
 
 > Карасев Илья
+
 ---
 1. [BEBRA CORPORATION](https://github.com/faermot/Homework_DPK_06_09_2024) (Первая WPF программа) #WPF
 2. [CheckTypes](https://github.com/faermot/Homework_DPK_08_09_2024)
