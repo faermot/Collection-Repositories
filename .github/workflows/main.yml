@@ -23,7 +23,7 @@ jobs:
 
     - name: Sync Repository Visibility
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub автоматически предоставляет токен
+        GITHUB_TOKEN: "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"  # GitHub автоматически предоставляет токен
       run: |
           python - <<EOF
           import re
