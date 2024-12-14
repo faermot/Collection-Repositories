@@ -4,6 +4,8 @@
 
 > Карасев Илья
 
+![image](https://github.com/user-attachments/assets/5b324a47-1afd-4869-be5c-eace4df7990e)
+
 1. [BEBRA CORPORATION](https://github.com/faermot/Homework_DPK_06_09_2024) (Первая WPF программа) #WPF
 2. [CheckTypes](https://github.com/faermot/Homework_DPK_08_09_2024)
 3. [Comparing Integeres](https://github.com/faermot/Homework_DPK__Comparing_Numbers) #WPF
@@ -28,26 +30,3 @@
 21. [Наследование классов](https://github.com/faermot/Class-Inheritance)
 22. [Структуры и перечисления](https://github.com/faermot/Struct-Enum)
 23. [Обобщённые типы](https://github.com/faermot/Generic)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-...
-![image](https://github.com/user-attachments/assets/5b324a47-1afd-4869-be5c-eace4df7990e)
