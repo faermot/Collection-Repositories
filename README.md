@@ -31,3 +31,4 @@
 22. [Структуры и перечисления](https://github.com/faermot/Struct-Enum)
 23. [Обобщённые типы](https://github.com/faermot/Generic)
 24. [События](https://github.com/faermot/Events)
+25. [Потоки](https://github.com/faermot/Threads)
